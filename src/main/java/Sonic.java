@@ -14,10 +14,8 @@ public class Sonic {
         System.out.println(line);
 
         Scanner userInputScanner = new Scanner(System.in);
-
         while (true) {
             String userInput = userInputScanner.nextLine();
-
             if (userInput.equalsIgnoreCase("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
                 System.out.println(line);
@@ -26,7 +24,6 @@ public class Sonic {
             System.out.println(userInput);
             System.out.println(line);
         }
-
 
     }
 }
