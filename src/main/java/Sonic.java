@@ -15,28 +15,59 @@ public class Sonic {
         System.out.println(line);
 
         Scanner userInputScanner = new Scanner(System.in);
-        String[] tasksList = new String[100];
+        Task[] tasksList = new Task[100];
         int tasksCount = 0;
 
         while (true) {
-            String userInput = userInputScanner.nextLine();
+            String userInput = userInputScanner.nextLine().trim();
 
             if (userInput.equalsIgnoreCase("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
                 System.out.println(line);
                 break;
+
             } else if (userInput.equalsIgnoreCase("list")) {
                 if (tasksCount == 0) {
                     System.out.println("No tasks to show.");
                 } else {
+                    System.out.println("Here are the tasks in your list:");
                     for (int i = 0; i < tasksCount; i++) {
-                        System.out.println((i + 1) + ". " + tasksList[i]);
+                        System.out.println((i + 1) + ".[" + tasksList[i].getStatusIcon() + "] " + tasksList[i].getDescription());
                     }
                 }
-            } else {
-                tasksList[tasksCount] = userInput;
+
+            } else if (userInput.toLowerCase().startsWith("add")) {
+                String taskText = userInput.substring(4);
+                tasksList[tasksCount] = new Task(taskText);
                 tasksCount++;
-                System.out.println("added: " + userInput);
+                System.out.println("added: " + taskText);
+
+            } else if (userInput.toLowerCase().startsWith("mark")) {
+                String[] splitUserInput = userInput.split(" ");
+                int taskNumber = Integer.parseInt(splitUserInput[1]);
+                if (taskNumber >= 1 && taskNumber <= tasksCount) {
+                    Task taskToMark = tasksList[taskNumber - 1];
+                    taskToMark.setDone(true);
+                    System.out.println("Nice! I've marked this task as done:");
+                    System.out.println("  [" + taskToMark.getStatusIcon() + "] " + taskToMark.getDescription());
+                } else {
+                    System.out.println("Invalid task number!");
+                }
+
+            } else if (userInput.toLowerCase().startsWith("unmark")) {
+                String[] splitUserInput = userInput.split(" ");
+                int taskNumber = Integer.parseInt(splitUserInput[1]);
+                if (taskNumber >= 1 && taskNumber <= tasksCount) {
+                    Task taskToUnmark = tasksList[taskNumber - 1];
+                    taskToUnmark.setDone(false);
+                    System.out.println("Ok, I've marked this task as not done yet:");
+                    System.out.println("  [" + taskToUnmark.getStatusIcon() + "] " + taskToUnmark.getDescription());
+                } else {
+                    System.out.println("Invalid task number!");
+                }
+
+            } else {
+                System.out.println("Unknown command: " + userInput);
             }
 
             System.out.println(line);
