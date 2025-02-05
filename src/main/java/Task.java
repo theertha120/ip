@@ -27,4 +27,12 @@ public class Task {
         isDone = done;
     }
 
+    public String toString() {
+        return "[" + getStatusIcon() + "] " + description;
+    }
 }
+
+
+
+
+
