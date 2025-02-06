@@ -1,7 +1,39 @@
 Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
-
+SSSSS  OOOOO  N   N  III  CCCCC
+S      O   O  NN  N   I   C
+ SSS   O   O  N N N   I   C
+    S  O   O  N  NN   I   C
+SSSSS  OOOOO  N   N  III  CCCCC
+I am Sonic! What can I do for you?
+__________________________________________________________
+Got it, I have added this task:
+   [T][ ] Do homework
+Now you have 1 tasks in the list.
+__________________________________________________________
+Got it, I have added this task:
+   [ ] Read book
+Now you have 2 tasks in the list.
+__________________________________________________________
+Got it, I have added this task:
+   [D][ ] Finish project (by: 5 PM)
+Now you have 3 tasks in the list.
+__________________________________________________________
+Got it, I have added this task:
+   [E][ ] Attend meeting (from: 10th Feb 2PM to: 4PM)
+Now you have 4 tasks in the list.
+__________________________________________________________
+Here are the tasks in your list:
+1.[T][ ] Do homework
+2.[ ] Read book
+3.[D][ ] Finish project (by: 5 PM)
+4.[E][ ] Attend meeting (from: 10th Feb 2PM to: 4PM)
+__________________________________________________________
+Nice! I've marked this task as done:
+[T][X] Do homework
+__________________________________________________________
+Here are the tasks in your list:
+1.[T][X] Do homework
+2.[ ] Read book
+3.[D][ ] Finish project (by: 5 PM)
+4.[E][ ] Attend meeting (from: 10th Feb 2PM to: 4PM)
+__________________________________________________________

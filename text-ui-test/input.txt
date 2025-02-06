@@ -1,0 +1,7 @@
+todo Do homework
+add Read book
+deadline Finish project /by 5 PM
+event Attend meeting /from 10th Feb 2PM /to 4PM
+list
+mark 1
+list
