@@ -28,7 +28,7 @@ public class Sonic {
 
     private static void printTasks(int tasksCount, Task[] tasksList) {
         if (tasksCount == 0) {
-            System.out.println("No tasks to show.");
+            System.out.println("No tasks in your list right now, you are free!");
         } else {
             System.out.println("Here are the tasks in your list:");
             for (int i = 0; i < tasksCount; i++) {
@@ -38,59 +38,118 @@ public class Sonic {
     }
 
     private static void markTask(String userInput, int tasksCount, Task[] tasksList) {
-        String[] splitUserInput = userInput.split(" ");
-        int taskNumber = Integer.parseInt(splitUserInput[1]);
+        try {
+            String[] splitUserInput = userInput.split(" ");
 
-        if (taskNumber >= 1 && taskNumber <= tasksCount) {
+            if (splitUserInput.length == 1) {
+                System.out.println("Mark format error! Try the command: 'mark <task number>'");
+                return;
+            }
+
+            int taskNumber = Integer.parseInt(splitUserInput[1]);
+
+            if (taskNumber < 1 || taskNumber > tasksCount) {
+                throw new IndexOutOfBoundsException();
+            }
+
             Task taskToMark = tasksList[taskNumber - 1];
             taskToMark.setDone(true);
             System.out.println("Nice! I've marked this task as done:");
             System.out.println(taskToMark);
-        } else {
-            System.out.println("Invalid task number!");
+
+        } catch (NumberFormatException e) {
+            System.out.println("That's not a number! Try the command: 'mark <task number>'");
+
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("The task does not exist... yet");
         }
     }
 
     private static void unmarkTask(String userInput, int tasksCount, Task[] tasksList) {
-        String[] splitUserInput = userInput.split(" ");
-        int taskNumber = Integer.parseInt(splitUserInput[1]);
+        try {
+            String[] splitUserInput = userInput.split(" ");
 
-        if (taskNumber >= 1 && taskNumber <= tasksCount) {
+            if (splitUserInput.length == 1) {
+                System.out.println("Mark format error! Try the command: 'unmark <task number>");
+                return;
+            }
+
+            int taskNumber = Integer.parseInt(splitUserInput[1]);
+
+            if (taskNumber < 1 || taskNumber > tasksCount) {
+                throw new IndexOutOfBoundsException();
+            }
+
             Task taskToUnmark = tasksList[taskNumber - 1];
             taskToUnmark.setDone(false);
             System.out.println("Ok, I've marked this task as not done yet:");
             System.out.println(taskToUnmark);
-        } else {
-            System.out.println("Invalid task number!");
+
+        } catch (NumberFormatException e) {
+            System.out.println("That's not a number! Try the command: 'unmark <task number>'");
+
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("The task does not exist... yet");
         }
     }
 
-    private static int addTodo(String userInput, int tasksCount, Task[] tasksList) {
-        String taskText = userInput.substring(5).trim();
+    private static int addTodo(String userInput, int tasksCount, Task[] tasksList) throws IllegalArgumentException{
+        try {
+            if (userInput.length() <= 4) {
+                throw new IllegalArgumentException("Todo needs a description! Try the command: 'todo <task text>'");
+            }
+            String taskText = userInput.substring(5).trim();
+            Todo newTodo = new Todo(taskText);
+            return addTask(tasksList, tasksCount, newTodo);
 
-        Todo newTodo = new Todo(taskText);
-        return addTask(tasksList, tasksCount, newTodo);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Todo needs a description! Try the command: 'todo <task text>'");
+        }
+
+        return tasksCount;
     }
 
-    private static int addEvent(String userInput, int tasksCount, Task[] tasksList) {
-        String[] fromSplit = userInput.split(" /from ");
-        String[] toSplit = fromSplit[1].split(" /to ");
+    private static int addEvent(String userInput, int tasksCount, Task[] tasksList) throws IllegalArgumentException {
+        try {
+            if (!userInput.contains(" /from ") || !userInput.contains(" /to ")) {
+                throw new IllegalArgumentException();
+            }
 
-        String eventName = fromSplit[0].substring(6).trim();
-        String startTime = toSplit[0].trim();
-        String endTime = toSplit[1].trim();
+            String[] fromSplit = userInput.split(" /from ");
+            String[] toSplit = fromSplit[1].split(" /to ");
 
-        Event newEvent = new Event(eventName, startTime, endTime);
-        return addTask(tasksList, tasksCount, newEvent);
+            String eventName = fromSplit[0].substring(6).trim();
+            String startTime = toSplit[0].trim();
+            String endTime = toSplit[1].trim();
+
+            Event newEvent = new Event(eventName, startTime, endTime);
+            return addTask(tasksList, tasksCount, newEvent);
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Event format entered wrong! Try the command: ‘event <name> /from <start> /to <end>’");
+        }
+
+        return tasksCount;
     }
 
     private static int addDeadline(String userInput, int tasksCount, Task[] tasksList) {
-        String[] userInputSplit = userInput.split(" /by ");
-        String deadlineName = userInputSplit[0].substring(9).trim();
-        String endTime = userInputSplit[1].trim();
+        try {
+            if (!userInput.contains(" /by ")) {
+                throw new IllegalArgumentException();
+            }
 
-        Deadline newDeadline = new Deadline(deadlineName, endTime);
-        return addTask(tasksList, tasksCount, newDeadline);
+            String[] userInputSplit = userInput.split(" /by ");
+            String deadlineName = userInputSplit[0].substring(9).trim();
+            String endTime = userInputSplit[1].trim();
+
+            Deadline newDeadline = new Deadline(deadlineName, endTime);
+            return addTask(tasksList, tasksCount, newDeadline);
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Deadline format error! Try the command: ‘deadline <name> /by <time>’");
+        }
+
+        return tasksCount;
     }
 
     private static void goodbyeMessage() {
@@ -119,6 +178,11 @@ public class Sonic {
                     break;
 
                 case "add":
+                    if (userInput.trim().equalsIgnoreCase("add")) {
+                        System.out.println("Add format error! Try the command: 'add <task text>'");
+                        break;
+                    }
+
                     String taskText = userInput.substring(4).trim();
                     Task newTask = new Task(taskText);
                     tasksCount = addTask(tasksList, tasksCount, newTask);
