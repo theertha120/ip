@@ -1,3 +1,5 @@
+package sonic.ui;
+
 public class Event extends Task {
 
     protected String start;

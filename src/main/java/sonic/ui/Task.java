@@ -1,3 +1,5 @@
+package sonic.ui;
+
 public class Task {
     protected String description;
     protected boolean isDone;

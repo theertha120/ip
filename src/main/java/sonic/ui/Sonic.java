@@ -1,3 +1,5 @@
+package sonic.ui;
+
 import java.util.Scanner;
 
 public class Sonic {
