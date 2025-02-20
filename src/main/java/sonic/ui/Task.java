@@ -1,6 +1,6 @@
 package sonic.ui;
 
-public class Task {
+public  class Task {
     protected String description;
     protected boolean isDone;
 
@@ -31,6 +31,10 @@ public class Task {
 
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
+    }
+
+    public String toFileString() {
+        return this.getClass().getSimpleName() + " | " + (isDone ? 1 : 0) + " | " + description;
     }
 }
 
