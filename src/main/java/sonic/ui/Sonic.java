@@ -16,7 +16,7 @@ public class Sonic {
          ___) | (_) | | | | | (__\s
         |____/ \\___/|_| |_|_|\\___|""";
 
-    private static final String FILE_PATH = "./data/duke.txt";
+    private static final String FILE_PATH = "./data/sonic.txt";
     private static final String DIRECTORY_PATH = "./data";
 
 

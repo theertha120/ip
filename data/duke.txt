@@ -1,6 +1,0 @@
-D | 0 | fhfhf | 6
-E | 0 | fhfh | 6 | 8
-T | 0 | fjfj
-T | 0 | fjfj
-T | 0 | fjf
-E | 0 | fjfj | 7 | 9

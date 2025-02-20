@@ -1,0 +1,5 @@
+T | 1 | buy grocery
+E | 0 | TV show | 4pm | 6pm
+D | 0 | submit Level 7 | Tomorrow
+T | 0 | do EE2026 quiz
+D | 1 | submit assignment | 12 pm
