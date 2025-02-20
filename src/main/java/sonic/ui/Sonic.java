@@ -1,9 +1,9 @@
 package sonic.ui;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Sonic {
-    public static final int MAX_TASKS = 100;
     public static final String DIVIDER = "__________________________________________________________";
     public static final String LOGO = """
          ____              _     \s
@@ -19,27 +19,25 @@ public class Sonic {
         System.out.println(DIVIDER);
     }
 
-    private static int addTask(Task[] tasksList, int tasksCount, Task task) {
-        tasksList[tasksCount] = task;
-        tasksCount++;
+    private static void addTask(ArrayList<Task> tasksList, Task task) {
+        tasksList.add(task);
         System.out.println("Got it, I have added this task:");
         System.out.println("   " + task.toString());
-        System.out.println("Now you have " + tasksCount + " tasks in the list.");
-        return tasksCount;
+        System.out.println("Now you have " + tasksList.size() + " tasks in the list.");
     }
 
-    private static void printTasks(int tasksCount, Task[] tasksList) {
-        if (tasksCount == 0) {
+    private static void printTasks(ArrayList<Task> tasksList) {
+        if (tasksList.isEmpty()) {
             System.out.println("No tasks in your list right now, you are free!");
         } else {
             System.out.println("Here are the tasks in your list:");
-            for (int i = 0; i < tasksCount; i++) {
-                System.out.println((i + 1) + "." + tasksList[i].toString());
+            for (int i = 0; i < tasksList.size(); i++) {
+                System.out.println((i + 1) + "." + tasksList.get(i).toString());
             }
         }
     }
 
-    private static void markTask(String userInput, int tasksCount, Task[] tasksList) {
+    private static void markTask(String userInput, ArrayList<Task> tasksList) {
         try {
             String[] splitUserInput = userInput.split(" ");
 
@@ -50,11 +48,11 @@ public class Sonic {
 
             int taskNumber = Integer.parseInt(splitUserInput[1]);
 
-            if (taskNumber < 1 || taskNumber > tasksCount) {
+            if (taskNumber < 1 || taskNumber > tasksList.size()) {
                 throw new IndexOutOfBoundsException();
             }
 
-            Task taskToMark = tasksList[taskNumber - 1];
+            Task taskToMark = tasksList.get(taskNumber - 1);
             taskToMark.setDone(true);
             System.out.println("Nice! I've marked this task as done:");
             System.out.println(taskToMark);
@@ -67,7 +65,7 @@ public class Sonic {
         }
     }
 
-    private static void unmarkTask(String userInput, int tasksCount, Task[] tasksList) {
+    private static void unmarkTask(String userInput, ArrayList<Task> tasksList) {
         try {
             String[] splitUserInput = userInput.split(" ");
 
@@ -78,11 +76,11 @@ public class Sonic {
 
             int taskNumber = Integer.parseInt(splitUserInput[1]);
 
-            if (taskNumber < 1 || taskNumber > tasksCount) {
+            if (taskNumber < 1 || taskNumber > tasksList.size()) {
                 throw new IndexOutOfBoundsException();
             }
 
-            Task taskToUnmark = tasksList[taskNumber - 1];
+            Task taskToUnmark = tasksList.get(taskNumber - 1);
             taskToUnmark.setDone(false);
             System.out.println("Ok, I've marked this task as not done yet:");
             System.out.println(taskToUnmark);
@@ -95,23 +93,22 @@ public class Sonic {
         }
     }
 
-    private static int addTodo(String userInput, int tasksCount, Task[] tasksList) throws IllegalArgumentException{
+    private static void addTodo(String userInput, ArrayList<Task> tasksList) throws IllegalArgumentException{
         try {
             if (userInput.length() <= 4) {
                 throw new IllegalArgumentException("Todo needs a description! Try the command: 'todo <task text>'");
             }
             String taskText = userInput.substring(5).trim();
             Todo newTodo = new Todo(taskText);
-            return addTask(tasksList, tasksCount, newTodo);
+            addTask(tasksList, newTodo);
 
         } catch (IllegalArgumentException e) {
             System.out.println("Todo needs a description! Try the command: 'todo <task text>'");
         }
 
-        return tasksCount;
     }
 
-    private static int addEvent(String userInput, int tasksCount, Task[] tasksList) throws IllegalArgumentException {
+    private static void addEvent(String userInput, ArrayList<Task> tasksList) throws IllegalArgumentException {
         try {
             if (!userInput.contains(" /from ") || !userInput.contains(" /to ")) {
                 throw new IllegalArgumentException();
@@ -125,16 +122,15 @@ public class Sonic {
             String endTime = toSplit[1].trim();
 
             Event newEvent = new Event(eventName, startTime, endTime);
-            return addTask(tasksList, tasksCount, newEvent);
+            addTask(tasksList, newEvent);
 
         } catch (IllegalArgumentException e) {
             System.out.println("Event format entered wrong! Try the command: ‘event <name> /from <start> /to <end>’");
         }
 
-        return tasksCount;
     }
 
-    private static int addDeadline(String userInput, int tasksCount, Task[] tasksList) {
+    private static void addDeadline(String userInput, ArrayList<Task> tasksList) {
         try {
             if (!userInput.contains(" /by ")) {
                 throw new IllegalArgumentException();
@@ -145,13 +141,39 @@ public class Sonic {
             String endTime = userInputSplit[1].trim();
 
             Deadline newDeadline = new Deadline(deadlineName, endTime);
-            return addTask(tasksList, tasksCount, newDeadline);
+            addTask(tasksList, newDeadline);
 
         } catch (IllegalArgumentException e) {
             System.out.println("Deadline format error! Try the command: ‘deadline <name> /by <time>’");
         }
 
-        return tasksCount;
+    }
+
+    private static void deleteTask(String userInput, ArrayList<Task> tasksList) {
+        try {
+            String[] splitUserInput = userInput.split(" ");
+            if (splitUserInput.length == 1) {
+                System.out.println("Delete format error! Try the command: 'delete <task number>'");
+                return;
+            }
+
+            int taskNumber = Integer.parseInt(splitUserInput[1]);
+
+            if (taskNumber < 1 || taskNumber > tasksList.size()) {
+                throw new IndexOutOfBoundsException();
+            }
+
+            Task taskToDelete = tasksList.remove(taskNumber - 1);
+            System.out.println("Okay! I've deleted this task:");
+            System.out.println(taskToDelete);
+            System.out.println("Now you have " + tasksList.size() + " tasks in the list.");
+
+        } catch (NumberFormatException e) {
+            System.out.println("That's not a number! Try the command: 'delete <task number>'");
+
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("The task does not exist... yet");
+        }
     }
 
     private static void goodbyeMessage() {
@@ -161,8 +183,7 @@ public class Sonic {
 
     public static void main(String[] args) {
         Scanner userInputScanner = new Scanner(System.in);
-        Task[] tasksList = new Task[MAX_TASKS];
-        int tasksCount = 0;
+        ArrayList<Task> tasksList = new ArrayList<>();
 
         welcomeMessage();
 
@@ -176,7 +197,7 @@ public class Sonic {
                     return;
 
                 case "list":
-                    printTasks(tasksCount, tasksList);
+                    printTasks(tasksList);
                     break;
 
                 case "add":
@@ -187,27 +208,31 @@ public class Sonic {
 
                     String taskText = userInput.substring(4).trim();
                     Task newTask = new Task(taskText);
-                    tasksCount = addTask(tasksList, tasksCount, newTask);
+                    addTask(tasksList, newTask);
                     break;
 
                 case "mark":
-                    markTask(userInput, tasksCount, tasksList);
+                    markTask(userInput, tasksList);
                     break;
 
                 case "unmark":
-                    unmarkTask(userInput, tasksCount, tasksList);
+                    unmarkTask(userInput, tasksList);
                     break;
 
                 case "todo":
-                    tasksCount = addTodo(userInput, tasksCount, tasksList);
+                    addTodo(userInput, tasksList);
                     break;
 
                 case "event":
-                    tasksCount = addEvent(userInput, tasksCount, tasksList);
+                    addEvent(userInput, tasksList);
                     break;
 
                 case "deadline":
-                    tasksCount = addDeadline(userInput, tasksCount, tasksList);
+                    addDeadline(userInput, tasksList);
+                    break;
+
+                case "delete":  // Added: Case to handle delete command
+                    deleteTask(userInput, tasksList);  // Call delete method
                     break;
 
                 default:
