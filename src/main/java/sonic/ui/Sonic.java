@@ -2,6 +2,10 @@ package sonic.ui;
 
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Sonic {
     public static final String DIVIDER = "__________________________________________________________";
@@ -11,6 +15,9 @@ public class Sonic {
         \\___ \\ / _ \\| '_ \\| |/ __|
          ___) | (_) | | | | | (__\s
         |____/ \\___/|_| |_|_|\\___|""";
+
+    private static final String FILE_PATH = "./data/duke.txt";
+    private static final String DIRECTORY_PATH = "./data";
 
 
     private static void welcomeMessage() {
@@ -24,6 +31,7 @@ public class Sonic {
         System.out.println("Got it, I have added this task:");
         System.out.println("   " + task.toString());
         System.out.println("Now you have " + tasksList.size() + " tasks in the list.");
+        saveTasks(tasksList);
     }
 
     private static void printTasks(ArrayList<Task> tasksList) {
@@ -56,6 +64,7 @@ public class Sonic {
             taskToMark.setDone(true);
             System.out.println("Nice! I've marked this task as done:");
             System.out.println(taskToMark);
+            saveTasks(tasksList);
 
         } catch (NumberFormatException e) {
             System.out.println("That's not a number! Try the command: 'mark <task number>'");
@@ -84,6 +93,7 @@ public class Sonic {
             taskToUnmark.setDone(false);
             System.out.println("Ok, I've marked this task as not done yet:");
             System.out.println(taskToUnmark);
+            saveTasks(tasksList);
 
         } catch (NumberFormatException e) {
             System.out.println("That's not a number! Try the command: 'unmark <task number>'");
@@ -167,12 +177,86 @@ public class Sonic {
             System.out.println("Okay! I've deleted this task:");
             System.out.println(taskToDelete);
             System.out.println("Now you have " + tasksList.size() + " tasks in the list.");
+            saveTasks(tasksList);
 
         } catch (NumberFormatException e) {
             System.out.println("That's not a number! Try the command: 'delete <task number>'");
 
         } catch (IndexOutOfBoundsException e) {
             System.out.println("The task does not exist... yet");
+        }
+    }
+
+    private static ArrayList<Task> loadTasks() {
+        ArrayList<Task> tasksList = new ArrayList<>();
+        File file = new File(FILE_PATH);
+
+        try {
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split(" \\| ");
+                Task task;
+                switch (parts[0]) {
+                    case "T":
+                        if (parts.length >= 3) {
+                            task = new Todo(parts[2]);
+                        } else {
+                            System.out.println("Todo format is incomplete! Expected: 'todo <description>'");
+                            continue;
+                        }
+                        break;
+                    case "D":
+                        if (parts.length >= 4) {
+                            task = new Deadline(parts[2], parts[3]);
+                        } else {
+                            System.out.println("Deadline format is incomplete! Expected: 'deadline <name> /by <time>'");
+                            continue;
+                        }
+                        break;
+                    case "E":
+                        if (parts.length >= 5) {
+                            task = new Event(parts[2], parts[3], parts[4]);
+                        } else {
+                            System.out.println("Event format is incomplete! Expected: 'event <name> /from <start> /to <end>'");
+                            continue;
+                        }
+                        break;
+                    default:
+                        continue;
+                }
+
+                if (parts[1].equals("1")) {
+                    task.setDone(true);
+                }
+
+                tasksList.add(task);
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+        }
+
+        return tasksList;
+    }
+
+    private static void saveTasks(ArrayList<Task> tasksList) {
+        File directory = new File(DIRECTORY_PATH);
+        if (!directory.exists()) {
+            boolean dirCreated = directory.mkdir();
+            if (!dirCreated) {
+                System.out.println("Error: Unable to create directory for storing tasks.");
+                return;
+            }
+        }
+
+        try (FileWriter fileWriter = new FileWriter(FILE_PATH)) {
+            for (Task task : tasksList) {
+                fileWriter.write(task.toFileString());
+                fileWriter.write(System.lineSeparator());
+            }
+        } catch (IOException e) {
+            System.out.println("Error saving tasks: " + e.getMessage());
         }
     }
 
@@ -183,7 +267,7 @@ public class Sonic {
 
     public static void main(String[] args) {
         Scanner userInputScanner = new Scanner(System.in);
-        ArrayList<Task> tasksList = new ArrayList<>();
+        ArrayList<Task> tasksList = loadTasks();
 
         welcomeMessage();
 
@@ -231,8 +315,8 @@ public class Sonic {
                     addDeadline(userInput, tasksList);
                     break;
 
-                case "delete":  // Added: Case to handle delete command
-                    deleteTask(userInput, tasksList);  // Call delete method
+                case "delete":
+                    deleteTask(userInput, tasksList);
                     break;
 
                 default:
