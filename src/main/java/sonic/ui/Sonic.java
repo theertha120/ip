@@ -284,17 +284,6 @@ public class Sonic {
                     printTasks(tasksList);
                     break;
 
-                case "add":
-                    if (userInput.trim().equalsIgnoreCase("add")) {
-                        System.out.println("Add format error! Try the command: 'add <task text>'");
-                        break;
-                    }
-
-                    String taskText = userInput.substring(4).trim();
-                    Task newTask = new Task(taskText);
-                    addTask(tasksList, newTask);
-                    break;
-
                 case "mark":
                     markTask(userInput, tasksList);
                     break;
