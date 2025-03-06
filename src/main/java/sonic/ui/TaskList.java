@@ -2,6 +2,10 @@ package sonic.ui;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a list of tasks and provides methods to interact with the list.
+ * Tasks can be marked as done, added, deleted, or searched.
+ */
 public class TaskList {
     private final ArrayList<Task> TasksList;
 
@@ -13,6 +17,11 @@ public class TaskList {
         this.TasksList = tasks;
     }
 
+    /**
+     * Prints all tasks in the list to the user.
+     *
+     * @param ui The Ui instance for displaying messages
+     */
     public void printTasks(Ui ui) {
         if (TasksList.isEmpty()) {
             ui.showMessage("No tasks in your list right now, you are free!");
@@ -24,6 +33,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Marks a task as completed based on user input.
+     *
+     * @param userInput The input from the user, where the second part is the task number
+     * @param ui The Ui instance for displaying messages
+     */
     public void markTask(String[] userInput, Ui ui) {
         try {
             if (userInput.length < 2) {
@@ -48,6 +63,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Marks a task as not completed based on user input.
+     *
+     * @param userInput The input from the user, where the second part is the task number.
+     * @param ui The Ui instance for displaying messages.
+     */
     public void unmarkTask(String[] userInput, Ui ui) {
         try {
             if (userInput.length < 2) {
@@ -72,6 +93,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Adds a new Todo task to the list.
+     *
+     * @param userInput The input from the user, where the second part is the todo task description.
+     * @param ui The Ui instance for displaying messages.
+     */
     public void addTodo(String[] userInput, Ui ui) {
         try {
             if (userInput.length < 2 || userInput[1].trim().isEmpty()) {
@@ -85,6 +112,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Adds a new Event task to the list.
+     *
+     * @param userInput The input from the user, where the second part contains event details.
+     * @param ui The Ui instance for displaying messages.
+     */
     public void addEvent(String[] userInput, Ui ui) {
         try {
             if (userInput.length < 2 || !userInput[1].contains(" /from ") || !userInput[1].contains(" /to ")) {
@@ -105,6 +138,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Adds a new Deadline task to the list.
+     *
+     * @param userInput The input from the user, where the second part contains deadline details.
+     * @param ui The Ui instance for displaying messages.
+     */
     public void addDeadline(String[] userInput, Ui ui) {
         try {
             if (userInput.length < 2 || !userInput[1].contains(" /by ")) {
@@ -124,6 +163,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Deletes a task from the list based on user input.
+     *
+     * @param inputParts The input from the user, where the second part is the task number to delete.
+     * @param ui The Ui instance for displaying messages.
+     */
     public void deleteTask(String[] inputParts, Ui ui) {
         try {
             if (inputParts.length < 2) {
@@ -150,6 +195,47 @@ public class TaskList {
         }
     }
 
+    /**
+     * Finds tasks in the list that match the given keyword.
+     *
+     * @param userInput The input from the user, where the second part is the keyword to search for.
+     * @param ui The Ui instance for displaying messages.
+     */
+    public void findTasks(String[] userInput, Ui ui) {
+        try {
+            if (userInput.length < 2 || userInput[1].trim().isEmpty()) {
+                throw new IllegalArgumentException();
+            }
+
+            String keyword = userInput[1].toLowerCase();
+            ArrayList<Task> matchingTasks = new ArrayList<>();
+
+            for (Task task : TasksList) {
+                if (task.getDescription().toLowerCase().contains(keyword)) {
+                    matchingTasks.add(task);
+                }
+            }
+
+            if (matchingTasks.isEmpty()) {
+                ui.showMessage("No matching tasks found for: " + keyword);
+            } else {
+                ui.showMessage("Here are the matching tasks in your list:");
+                for (int i = 0; i < matchingTasks.size(); i++) {
+                    ui.showMessage((i + 1) + ". " + matchingTasks.get(i));
+                }
+            }
+
+        } catch (IllegalArgumentException e) {
+            ui.showMessage("Please provide a keyword for search. Try the command: 'find <keyword>'");
+        }
+    }
+
+    /**
+     * Adds a task to the list and notifies the user.
+     *
+     * @param task The task to add.
+     * @param ui The Ui instance for displaying messages.
+     */
     private void addTask(Task task, Ui ui) {
         TasksList.add(task);
         ui.showMessage("Got it, I have added this task:");
@@ -157,6 +243,11 @@ public class TaskList {
         ui.showMessage("Now you have " + TasksList.size() + " tasks in the list.");
     }
 
+    /**
+     * Returns the list of tasks.
+     *
+     * @return The list of tasks.
+     */
     public ArrayList<Task> getTasks() {
         return TasksList;
     }
