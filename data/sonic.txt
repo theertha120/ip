@@ -1,5 +1,45 @@
-T | 1 | buy grocery
-E | 0 | TV show | 4pm | 6pm
-D | 0 | submit Level 7 | Tomorrow
-T | 0 | do EE2026 quiz
-D | 1 | submit assignment | 12 pm
+D | 0 | hhf | th earth is round
+D | 0 | jdjd | 3rd october 1400
+D | 0 | dhdh | 3rd 2pm
+D | 0 | djdj | 12pm 3rd
+D | 0 | jdjd | 2pm 4tg
+D | 0 | djjd | Mar 03 2019 12pm
+D | 0 | djd | 8:19pm 8:19pm
+D | 0 | kdkd | 8:19pm
+D | 0 | jdjd | Sep 09 2019
+D | 0 | jjsjs | 3rd octber 2000
+D | 0 | djjd | 8pm Sep 09 2019
+D | 0 | jdjd | 3rd october
+D | 0 | sjsj | dhddj shsjjs jsjssj
+T | 0 | hey
+D | 0 | hey you are nice | 7pm
+D | 0 | hdhd | 3pm 8:19pm
+D | 0 | shd | 8:19pm 3:30pm
+D | 0 | jjd | 3:30pm Sep 09 2019
+D | 0 | hshs | 3:30pm 8:19pm
+D | 0 | jjs | 4pm
+D | 0 | jdjd sjsj | Sep 09 2019 3:30pm
+D | 0 | sjsj | Sep 09 2019 3:30pm
+D | 0 | jdjd | 6pm
+D | 0 | jdd | Sep 09 2019
+D | 0 | sjs | 1800 8:19pm
+D | 0 | sjsj | Sep 09 2019 6pm
+D | 0 | djd | 5pm
+D | 0 | djdj | Sep 09 2019
+D | 0 | djjd | Sep 09 2019 6pm
+D | 0 | ddj | 1800 8:19pm
+D | 0 | dj | 6pm
+D | 0 | dj | Sep 09 2019
+D | 0 | djd | Sep 09 2019 6pm
+D | 0 | djd | 6pm Sep 09 2019
+D | 0 | djdj | 8:19pm
+D | 0 | djdj | 38pm
+D | 0 | dgdg | tomorrow the eatrh
+D | 0 | jdjd | Mar 22 2019
+D | 0 | djd | 10pm
+D | 0 | djdj | Mar 22 2019 6pm
+D | 0 | ddj | 180 2019-03-22
+D | 0 | djdj | 10pm Mar 22 2019
+D | 1 | read book | 7:30pm
+E | 0 | attend meeting | Sep 03 2025 5pm | 7pm Sep 03 2025
+T | 0 | buy book
