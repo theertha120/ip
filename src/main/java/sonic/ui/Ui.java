@@ -2,6 +2,10 @@ package sonic.ui;
 
 import java.util.Scanner;
 
+/**
+ * Handles the user interface
+ * It manages the interaction between the user and the system.
+ */
 public class Ui {
     private static final String DIVIDER = "__________________________________________________________";
     private static final String LOGO = """
@@ -13,10 +17,16 @@ public class Ui {
 
     private final Scanner scanner;
 
+    /**
+     * Initializes the Ui object with a scanner for reading user input.
+     */
     public Ui() {
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Displays the welcome message with a logo and prompts the user for input.
+     */
     public void showWelcomeMessage() {
         System.out.println("Hello from\n" + LOGO);
         System.out.println("I am Sonic! What can I do for you?");
@@ -27,6 +37,9 @@ public class Ui {
         return scanner.nextLine();
     }
 
+    /**
+     * Displays an error message when there is an issue loading the task list.
+     */
     public void showLoadingError() {
         System.out.println("Error loading task list. Creating new task list...");
     }
