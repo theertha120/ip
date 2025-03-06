@@ -38,6 +38,8 @@ public class TaskList {
      *
      * @param userInput The input from the user, where the second part is the task number
      * @param ui The Ui instance for displaying messages
+     * @throws NumberFormatException   If the task number is not a valid integer.
+     * @throws IndexOutOfBoundsException If the task number is out of range.
      */
     public void markTask(String[] userInput, Ui ui) {
         try {
@@ -68,6 +70,8 @@ public class TaskList {
      *
      * @param userInput The input from the user, where the second part is the task number.
      * @param ui The Ui instance for displaying messages.
+     * @throws NumberFormatException   If the task number is not a valid integer.
+     * @throws IndexOutOfBoundsException If the task number is out of range.
      */
     public void unmarkTask(String[] userInput, Ui ui) {
         try {
@@ -98,6 +102,7 @@ public class TaskList {
      *
      * @param userInput The input from the user, where the second part is the todo task description.
      * @param ui The Ui instance for displaying messages.
+     * @throws IllegalArgumentException If the todo description is empty.
      */
     public void addTodo(String[] userInput, Ui ui) {
         try {
@@ -117,6 +122,7 @@ public class TaskList {
      *
      * @param userInput The input from the user, where the second part contains event details.
      * @param ui The Ui instance for displaying messages.
+     * @throws IllegalArgumentException If the event command format is wrong.
      */
     public void addEvent(String[] userInput, Ui ui) {
         try {
@@ -143,6 +149,7 @@ public class TaskList {
      *
      * @param userInput The input from the user, where the second part contains deadline details.
      * @param ui The Ui instance for displaying messages.
+     * @throws IllegalArgumentException If the deadline command format is wrong.
      */
     public void addDeadline(String[] userInput, Ui ui) {
         try {
@@ -168,6 +175,9 @@ public class TaskList {
      *
      * @param inputParts The input from the user, where the second part is the task number to delete.
      * @param ui The Ui instance for displaying messages.
+     * @throws NumberFormatException   If the task number is not a valid integer.
+     * @throws IndexOutOfBoundsException If the task number is out of range.
+     * @throws IllegalArgumentException If the input format is incorrect.
      */
     public void deleteTask(String[] inputParts, Ui ui) {
         try {
@@ -200,6 +210,7 @@ public class TaskList {
      *
      * @param userInput The input from the user, where the second part is the keyword to search for.
      * @param ui The Ui instance for displaying messages.
+     * @throws IllegalArgumentException If the find command keyword is missing.
      */
     public void findTasks(String[] userInput, Ui ui) {
         try {

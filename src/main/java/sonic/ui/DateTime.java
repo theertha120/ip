@@ -15,7 +15,9 @@ public class DateTime {
      * If the input cannot be parsed, it returns the original string.
      *
      * @param dateString The date string to be formatted (e.g., "2025-03-05").
+     * @throws DateTimeParseException If the input date string is not in the expected format.
      * @return The formatted date string (e.g., "Mar 05 2025") or the original string if invalid.
+     *
      */
     public static String formatDate(String dateString) {
         try {
@@ -32,6 +34,7 @@ public class DateTime {
      * If the input is invalid, it returns the original string.
      *
      * @param timeString The time string to be formatted (e.g., "1530").
+     * @throws NumberFormatException If the input time string cannot be parsed.
      * @return The formatted time string (e.g., "3:30 pm") or the original string if invalid.
      */
     public static String formatTime(String timeString) {

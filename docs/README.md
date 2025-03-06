@@ -25,7 +25,7 @@ Sonic is a task management Command Line Interface application that helps the use
 ## Getting Started
 
   1. Ensure you have Java 17 or above installed on your computer.
-  2. Download the latest .jar from here.
+  2. Download the latest .jar from [here](https://github.com/theertha120/ip/releases).
   3. Copy the file to the folder you want to use as the home folder for your TaskList.
   4. Open a command terminal, cd into the folder you put the jar file in and run the following: <br>
 `java -jar sonic.jar`

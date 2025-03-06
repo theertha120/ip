@@ -24,6 +24,7 @@ public class Storage {
      * Loads the tasks from the file specified by the file path.
      * If the file does not exist, an empty task list is returned.
      *
+     * @throws FileNotFoundException If file does not exist.
      * @return An ArrayList of Task objects loaded from the file.
      */
     public ArrayList<Task> load() throws FileNotFoundException {
