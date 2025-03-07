@@ -1,4 +1,6 @@
-package sonic.ui;
+package sonic.task;
+
+import sonic.datetime.DateTime;
 
 /**
  * Represents an Event task, a type of Task with a description, start time, and end time.

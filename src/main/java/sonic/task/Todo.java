@@ -1,4 +1,4 @@
-package sonic.ui;
+package sonic.task;
 
 /**
  * Represents a Todo task, a type of Task with a description.

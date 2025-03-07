@@ -1,6 +1,14 @@
-package sonic.ui;
+package sonic.storage;
 
-import java.io.*;
+import sonic.task.Deadline;
+import sonic.task.Event;
+import sonic.task.Task;
+import sonic.task.Todo;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -72,7 +80,9 @@ public class Storage {
      */
     private Task parseTask(String line) {
         String[] taskData = line.split(" \\| ");
+
         if (taskData.length < 3) {
+            System.out.println("Invalid task format: Missing mandatory fields.");
             return null;
         }
 
@@ -80,28 +90,30 @@ public class Storage {
         boolean isDone = taskData[1].equals("1");
         String description = taskData[2];
 
-        Task task = null;
+        Task task;
         switch (type) {
             case "T":
                 task = new Todo(description);
                 break;
             case "D":
-                if (taskData.length >= 4) {
-                    task = new Deadline(description, taskData[3]);
+                if (taskData.length < 4) {
+                    System.out.println("Invalid Deadline format: Missing date.");
+                    return null;
                 }
+                task = new Deadline(description, taskData[3]);
                 break;
             case "E":
-                if (taskData.length >= 5) {
-                    task = new Event(description, taskData[3], taskData[4]);
+                if (taskData.length < 5) {
+                    System.out.println("Invalid Event format: Missing event time or place.");
+                    return null;
                 }
+                task = new Event(description, taskData[3], taskData[4]);
                 break;
             default:
+                System.out.println("Invalid task type: " + type);
                 return null;
         }
-
-        if (task != null) {
-            task.setDone(isDone);
-        }
+        task.setDone(isDone);
 
         return task;
     }

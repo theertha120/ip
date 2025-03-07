@@ -1,4 +1,6 @@
-package sonic.ui;
+package sonic.task;
+
+import sonic.datetime.DateTime;
 
 /**
  * Represents a Deadline task, a type of Task with a description and a due date.

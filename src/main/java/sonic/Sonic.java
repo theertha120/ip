@@ -1,4 +1,9 @@
-package sonic.ui;
+package sonic;
+
+import sonic.parser.Parser;
+import sonic.storage.Storage;
+import sonic.tasklist.TaskList;
+import sonic.ui.Ui;
 
 /**
  * Initializes the user interface (UI), storage, and task list.
@@ -38,11 +43,12 @@ public class Sonic {
         boolean isRunning = true;
         while (isRunning) {
             String userInput = ui.readCommand();
-            isRunning = Parser.handleCommand(userInput, tasks, ui, storage);
+            isRunning = Parser.parseCommand(userInput, tasks, ui, storage);
         }
     }
 
     public static void main(String[] args) {
-        new Sonic("./data/sonic.txt").run();
+        Sonic sonic = new Sonic("./data/sonic.txt");
+        sonic.run();
     }
 }
