@@ -62,6 +62,13 @@ public class Storage {
      * @param tasks The list of tasks to be saved.
      */
     public void save(ArrayList<Task> tasks) {
+        File directory = new File("./data");
+        if (!directory.exists()) {
+            boolean dirsCreated = directory.mkdirs();
+            if (!dirsCreated) {
+                System.out.println("Warning: Directory creation failed!");
+            }
+        }
         try (FileWriter writer = new FileWriter(filePath)) {
             for (Task task : tasks) {
                 writer.write(task.toFileString() + "\n");
